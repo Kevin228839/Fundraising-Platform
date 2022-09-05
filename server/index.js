@@ -2,13 +2,13 @@ const express = require('express');
 const app = express();
 const port = 8000;
 const cors = require('cors');
-const ProductRouter = require('./routes/product_route');
+const ProjectRouter = require('./routes/project_route');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', ProductRouter);
+app.use('/', ProjectRouter);
 // handle errors
 app.use((err, _req, res, _next) => {
   const statusCode = err.statusCode || 500;
