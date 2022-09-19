@@ -6,7 +6,7 @@ const getProjectList = async (page = 0) => {
   try {
     const [res] = await conn.query(
       `SELECT project_id, project_name, project_admin, project_category, project_caption, 
-      project_start_date, project_end_date, project_target_amount, project_image 
+      project_start_time, project_end_time, project_target_amount, project_image 
       FROM ProjectList LIMIT ?, ?`, [page * config.listPerPage, config.listPerPage]
     );
     // check whether next page exist

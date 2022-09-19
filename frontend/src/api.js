@@ -1,7 +1,7 @@
 const api = {
   hostname: 'localhost:8000',
-  getProjectList () {
-    return fetch(`http://${this.hostname}/api/v1/projectlist`, {
+  getProjectList (page) {
+    return fetch(`http://${this.hostname}/api/v1/projectlist?paging=${page}`, {
       headers: new Headers({
         'Content-Type': 'application/json'
       })

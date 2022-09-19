@@ -1,5 +1,5 @@
 const config = {
-  listPerPage: 2
+  listPerPage: 4
 };
 
 module.exports = config;
