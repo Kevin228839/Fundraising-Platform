@@ -7,8 +7,8 @@ const api = {
       })
     });
   },
-  getProjectDetail () {
-    return fetch(`http://${this.hostname}/api/v1/projectdetail`, {
+  getProjectDetail (id) {
+    return fetch(`http://${this.hostname}/api/v1/projectdetail?projectid=${id}`, {
       headers: new Headers({
         'Content-Type': 'application/json'
       })
