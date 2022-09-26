@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+import handleLogin from './GLogin';
 
 const Container = styled.div`
 height:70px;
@@ -25,6 +27,13 @@ const Header = () => {
       <StyledLink to={'/'}>
         <Title>Fundraising Dapp</Title>
       </StyledLink>
+      <GoogleLogin
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+        buttonText="Sign in with Google"
+        onSuccess={handleLogin}
+        onFailure={handleLogin}
+        cookiePolicy={'single_host_origin'}
+      />;
     </Container>
   );
 };

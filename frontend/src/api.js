@@ -13,14 +13,18 @@ const api = {
         'Content-Type': 'application/json'
       })
     });
+  },
+  userGoogleLogin (googleData) {
+    return fetch(`http://${this.hostname}/api/v1/usergooglelogin`, {
+      method: 'POST',
+      body: JSON.stringify({
+        token: googleData.tokenId
+      }),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
   }
-  // userGoogleLogin (?) {
-  //   return fetch(`http://${this.hostname}/api/v1/usergooglelogin`, {
-  //     headers: new Headers({
-  //       'Content-Type': 'application/json'
-  //     })
-  //   });
-  // }
 };
 
 export default api;
