@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import { TimeDiff } from '../../utils';
 
 const Container = styled.div`
@@ -58,7 +59,7 @@ const ProjectDayRemain = styled.div`
 font-family:Verdana;
 font-size:15px;`;
 
-const ProjectCapitalRaised = styled.div`
+const ProjectRaisingTarget = styled.div`
 font-family:Verdana;
 font-size:15px;`;
 
@@ -86,14 +87,16 @@ const List = ({ projectList, setPage, page }) => {
               row.map((project) => {
                 return (
                   <ProjectContainer key={project.project_id}>
+                    <Link to={'/project/' + project.project_id} >
                     <ProjectImg src={project.project_image}/>
+                    </Link>
                     <ProjectName>{project.project_name}</ProjectName>
                     <ProjectCategory>{project.project_category}</ProjectCategory>
                     <ProjectOwner>{project.project_admin}</ProjectOwner>
                     <ProjectCaption>{project.project_caption}</ProjectCaption>
                     <FlexSpaceBetween>
                       <ProjectDayRemain>剩下{ TimeDiff(new Date(), project.project_end_time) }天</ProjectDayRemain>
-                      <ProjectCapitalRaised>NT$ 10,000</ProjectCapitalRaised>
+                      <ProjectRaisingTarget>{project.project_target_amount}</ProjectRaisingTarget>
                     </FlexSpaceBetween>
                   </ProjectContainer>
                 );
