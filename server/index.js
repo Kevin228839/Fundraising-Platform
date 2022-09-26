@@ -3,6 +3,8 @@ const app = express();
 const port = 8000;
 const cors = require('cors');
 const ProjectRouter = require('./routes/project_route');
+const { pool } = require('./mysqlcon');
+
 console.log('test');
 app.use(cors());
 app.use(express.json());
@@ -18,4 +20,12 @@ app.use((err, _req, res, _next) => {
 
 app.listen(port, () => {
   console.log(`Example app is listening at port:${port}`);
+});
+
+// Check authentication middleware
+app.use(async (req, res, next) => {
+  const conn = await pool.getConnection();
+  const user = await conn.user.findFirst({ where: { id: req.session.userId } });
+  req.user = user;
+  next();
 });
