@@ -1,5 +1,5 @@
 const { pool } = require('./mysqlcon');
-// const config = require('../config');
+require('dotenv').config();
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 
@@ -7,6 +7,7 @@ const userGoogleLogin = async (req) => {
   const conn = await pool.getConnection();
   try {
     // verify Google-provided token
+    // console.log(req.body);
     const { token } = req.body;
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -14,17 +15,18 @@ const userGoogleLogin = async (req) => {
     });
     // check against our database
     const { name, email, picture } = ticket.getPayload();
-    const user = await conn.user.upsert({
-      where: { email },
-      update: { name, picture },
-      create: { name, email, picture }
-    });
+    const [res] = await conn.query(
+      `INSERT INTO User (name, email, picture) VALUES (?, ?, ?)
+      ON DUPLICATE KEY UPDATE name=?, picture=?`, [name, email, picture, name, picture]
+    );
+    const [userRes] = await conn.query('SELECT id FROM User WHERE email=?', [email]);
+    await conn.query('COMMIT');
     // store results in session
-    req.session.userId = user.id;
-    return { req, user };
+    req.session.userId = userRes;
+    return { req, res };
   } catch (err) {
     console.error('Error while login with google!', err.message);
-    // await conn.query('ROLLBACK');
+    await conn.query('ROLLBACK');
     throw err;
   } finally {
     await conn.release();

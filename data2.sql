@@ -11,12 +11,15 @@
 
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL,
   `name` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `picture` varchar(200) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+ALTER TABLE `User` ADD INDEX(`id`);
+ALTER TABLE `User` CHANGE `id` `id` INT NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Dumping data for table `ProjectList`
