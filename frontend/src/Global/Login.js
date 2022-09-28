@@ -28,6 +28,8 @@ const Login = () => {
       })
     });
     // res: 成功取得的google user資料
+    const data = await res.json();
+    console.log(data);
 
     // const data = await res.json();
     // if (data.error) {
