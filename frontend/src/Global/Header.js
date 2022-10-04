@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Login from './Login';
+import { gapi } from 'gapi-script';
+import GoogleBtn from '../Pages/User/GoogleBtn';
 
 const Container = styled.div`
 height:70px;
@@ -21,12 +23,21 @@ color:black;
 text-decoration:none;`;
 
 const Header = () => {
+  useEffect(() => {
+    const initClient = () => {
+      gapi.auth2.init({
+        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        scope: ''
+      });
+    };
+    gapi.load('client:auth2', initClient);
+  });
   return (
     <Container>
       <StyledLink to={'/'}>
         <Title>Fundraising Dapp</Title>
       </StyledLink>
-      <Login />
+      <GoogleBtn/>
     </Container>
   );
 };

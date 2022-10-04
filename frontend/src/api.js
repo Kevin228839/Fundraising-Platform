@@ -24,6 +24,21 @@ const api = {
         'Content-Type': 'application/json'
       })
     });
+  },
+  userLogout () {
+    return fetch(`http://${this.hostname}/api/v1/userlogout`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
+  },
+  user () {
+    return fetch(`http://${this.hostname}/user`, {
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 };
 

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Header from './Global/Header';
 import Home from './Pages/Home/Home';
 import Project from './Pages/Project/Project';
+import Profile from './Pages/User/Profile';
 
 const App = () => {
   const [page, setPage] = useState(0);
@@ -12,6 +13,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home page={page} setPage={setPage}/>} />
         <Route path='/project/:id' element={<Project />} />
+        <Route path='/user' element={<Profile/>} />
       </Routes>
     </>
   );

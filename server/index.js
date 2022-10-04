@@ -2,16 +2,15 @@ const express = require('express');
 const app = express();
 const port = 8000;
 const cors = require('cors');
+const session = require('express-session');
+const oneHour = 1000 * 60 * 60 * 1;
 const ProjectRouter = require('./routes/project_route');
 const UserRouter = require('./routes/user_route');
-const session = require('express-session');
-const oneDay = 1000 * 60 * 60 * 24;
 
-console.log('test');
-
+// set up session
 app.use(session({
   secret: 'thisismysecrctekeyfhrgfgrfrty84fwir767',
-  cookie: { maxAge: oneDay },
+  cookie: { maxAge: oneHour },
   saveUninitialized: false,
   resave: true
 }));

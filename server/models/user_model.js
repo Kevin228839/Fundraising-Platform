@@ -23,7 +23,7 @@ const userGoogleLogin = async (req) => {
     );
     await conn.query('COMMIT');
     // store results in session
-    req.session.userId = sub;
+    req.session.user = userRes;
     return { userRes };
   } catch (err) {
     console.error('Error while login with google!', err.message);
