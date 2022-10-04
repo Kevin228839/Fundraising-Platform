@@ -3,7 +3,10 @@ const UserModel = require('../models/user_model');
 const userGoogleLogin = async (req, res, next) => {
   try {
     const response = await UserModel.userGoogleLogin(req);
-    res.status(201).json({ data: response });
+    res.status(201).json({
+      message: 'Authentication successful!',
+      data: response
+    });
   } catch (err) {
     next(err);
   }

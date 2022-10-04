@@ -4,8 +4,18 @@ const port = 8000;
 const cors = require('cors');
 const ProjectRouter = require('./routes/project_route');
 const UserRouter = require('./routes/user_route');
+const session = require('express-session');
+const oneDay = 1000 * 60 * 60 * 24;
 
 console.log('test');
+
+app.use(session({
+  secret: 'thisismysecrctekeyfhrgfgrfrty84fwir767',
+  cookie: { maxAge: oneDay },
+  saveUninitialized: false,
+  resave: true
+}));
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -12,6 +12,7 @@
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
   `id` int NOT NULL,
+  `googleId` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `picture` varchar(200) NOT NULL,
@@ -25,6 +26,6 @@ ALTER TABLE `User` CHANGE `id` `id` INT NOT NULL AUTO_INCREMENT;
 -- Dumping data for table `ProjectList`
 --
 
-INSERT INTO `User` VALUES (1,'kevin','kev776522.mg08@nycu.edu.tw','https://static.wikia.nocookie.net/disney/images/9/99/Profile-_Kevin.png/revision/latest?cb=20190414091213'),(2,'corinna','bleak517@gmail.com','https://i5.walmartimages.com/asr/1ae8d3a4-9a95-40c4-8b59-090338be0076.1d29ef1683638805f23e262834666084.jpeg'),(3,'jessica','a0989961190@gmail.com','https://worldwideexperience.com/wp-content/uploads/2020/06/Backup-for-original-945x385.jpg')
+INSERT INTO `User` VALUES (1,'1','kevin','kev776522.mg08@nycu.edu.tw','https://static.wikia.nocookie.net/disney/images/9/99/Profile-_Kevin.png/revision/latest?cb=20190414091213'),(2,'2','corinna','bleak517@gmail.com','https://i5.walmartimages.com/asr/1ae8d3a4-9a95-40c4-8b59-090338be0076.1d29ef1683638805f23e262834666084.jpeg'),(3,'3','jessica','a0989961190@gmail.com','https://worldwideexperience.com/wp-content/uploads/2020/06/Backup-for-original-945x385.jpg')
 
 -- Dump completed on 2022-09-20  0:54:21

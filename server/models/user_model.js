@@ -7,23 +7,24 @@ const userGoogleLogin = async (req) => {
   const conn = await pool.getConnection();
   try {
     // verify Google-provided token
-    // console.log(req.body);
     const { token } = req.body;
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.REACT_APP_GOOGLE_CLIENT_ID
     });
     // check against our database
-    const { name, email, picture } = ticket.getPayload();
-    const [res] = await conn.query(
-      `INSERT INTO User (name, email, picture) VALUES (?, ?, ?)
-      ON DUPLICATE KEY UPDATE name=?, picture=?`, [name, email, picture, name, picture]
+    const { sub, name, email, picture } = ticket.getPayload();
+    await conn.query(
+      `INSERT INTO User (googleId, name, email, picture) VALUES (?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE googleId=?, name=?, picture=?`, [sub, name, email, picture, sub, name, picture]
     );
-    const [userRes] = await conn.query('SELECT id FROM User WHERE email=?', [email]);
+    const [userRes] = await conn.query(
+      'SELECT googleId, name, email, picture FROM User WHERE email=?', [email]
+    );
     await conn.query('COMMIT');
     // store results in session
-    req.session.userId = userRes;
-    return { req, res };
+    req.session.userId = sub;
+    return { userRes };
   } catch (err) {
     console.error('Error while login with google!', err.message);
     await conn.query('ROLLBACK');
