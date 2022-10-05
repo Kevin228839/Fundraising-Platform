@@ -10,10 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express-session": "^1.17.3",
+    "ethers": "^5.7.1",
     "express.js": "^1.0.0",
     "google-auth-library": "^8.5.2",
     "mysql2": "^2.3.3",

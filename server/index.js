@@ -6,6 +6,7 @@ const session = require('express-session');
 const oneHour = 1000 * 60 * 60 * 1;
 const ProjectRouter = require('./routes/project_route');
 const UserRouter = require('./routes/user_route');
+const PaymentRouter = require('./routes/payment_route');
 
 // set up session
 app.use(session({
@@ -19,8 +20,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// handle api requests
 app.use('/', ProjectRouter);
 app.use('/', UserRouter);
+app.use('/', PaymentRouter);
+
 // handle errors
 app.use((err, _req, res, _next) => {
   const statusCode = err.statusCode || 500;

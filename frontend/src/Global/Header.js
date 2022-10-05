@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 import GoogleBtn from '../Pages/User/GoogleBtn';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
 height:70px;
@@ -15,6 +16,17 @@ const Title = styled.div`
 width:400px;
 font-size:30px;
 font-style:oblique;`;
+
+const TopUp = styled.div`
+width:80px;
+padding-left:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+font-family:Arial;
+border: 2px black solid;
+border-radius:5px;`;
 
 const StyledLink = styled(Link)`
 letter-spacing:1em;
@@ -36,6 +48,9 @@ const Header = () => {
     <Container>
       <StyledLink to={'/'}>
         <Title>Fundraising Dapp</Title>
+      </StyledLink>
+      <StyledLink to={'/topup'}>
+        <TopUp>儲值</TopUp>
       </StyledLink>
       <GoogleBtn/>
     </Container>
