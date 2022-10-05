@@ -13,6 +13,15 @@ const api = {
         'Content-Type': 'application/json'
       })
     });
+  },
+  topUp (data) {
+    return fetch(`http://${this.hostname}/api/v1/topup`, {
+      method: 'POST',
+      body: JSON.stringify({ data }),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    });
   }
 };
 
