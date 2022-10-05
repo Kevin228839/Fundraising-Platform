@@ -13,6 +13,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<Home page={page} setPage={setPage}/>} />
+        <Route path='/project/:id' element={<Project />} />
         <Route path='/topup' element={<TopUp />} />
         <Route path='/user' element={<Profile/>} />
       </Routes>

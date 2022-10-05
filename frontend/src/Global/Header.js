@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 import GoogleBtn from '../Pages/User/GoogleBtn';
-import { Link } from 'react-router-dom';
 
 const Container = styled.div`
 height:70px;
