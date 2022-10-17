@@ -17,25 +17,36 @@ const api = {
   userGoogleLogin (googleData) {
     return fetch(`http://${this.hostname}/api/v1/usergooglelogin`, {
       method: 'POST',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
       body: JSON.stringify({
         token: googleData.tokenId
-      }),
-      headers: new Headers({
-        'Content-Type': 'application/json'
       })
     });
   },
-  userLogout () {
+  userLogout (accessToken) {
     return fetch(`http://${this.hostname}/api/v1/userlogout`, {
-      method: 'DELETE',
+      method: 'POST',
       headers: new Headers({
+        Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
       })
     });
   },
-  user () {
-    return fetch(`http://${this.hostname}/user`, {
+  getUserData (accessToken) {
+    return fetch(`http://${this.hostname}/api/v1/user`, {
       headers: new Headers({
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      })
+    });
+  },
+  refresh (refreshToken) {
+    return fetch(`http://${this.hostname}/api/v1/refresh`, {
+      method: 'POST',
+      headers: new Headers({
+        Authorization: `Bearer ${refreshToken}`,
         'Content-Type': 'application/json'
       })
     });

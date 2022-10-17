@@ -43,22 +43,44 @@ font-size:15px;
 font-family:Helvetica;`;
 
 const Profile = () => {
+  let accessToken, refreshToken;
+  if (typeof window !== 'undefined') {
+    accessToken = localStorage.getItem('accessToken');
+    refreshToken = localStorage.getItem('refreshToken');
+  }
+
   const [userData, setUserData] = useState(null);
   useEffect(() => {
+    const refresh = async (refreshToken) => {
+      const response = await api.refresh(refreshToken);
+      const data = await response.json();
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+        localStorage.setItem('accessToken', data.data.newAccessToken);
+        localStorage.setItem('refreshToken', data.data.newRefreshToken);
+      }
+    };
     const fetchUserData = async () => {
-      let response = await api.user();
+      let response = await api.getUserData(accessToken);
       response = await response.json();
       setUserData(response.data.res[0]);
     };
+
+    if (localStorage.getItem('accessToken') === 'undefined') {
+      refresh(refreshToken);
+    }
     fetchUserData();
   }, []);
   console.log(userData);
 
-  if (userData === null) {
-    return <Load />;
+  if (accessToken === null) {
+    return <p>Please Login first</p>;
   } else {
-    return (
-      <Wrap>
+    if (userData === null) {
+      return <Load />;
+    } else {
+      return (
+        <Wrap>
           <Container>
             <Left>
               <UserImg src={userData.picture} />
@@ -69,7 +91,8 @@ const Profile = () => {
             </Right>
           </Container>
         </Wrap>
-    );
+      );
+    }
   }
 };
 
