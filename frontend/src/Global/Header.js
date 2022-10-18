@@ -35,8 +35,9 @@ color:black;
 text-decoration:none;`;
 
 const Header = () => {
-  let refreshToken;
+  let accessToken, refreshToken;
   if (typeof window !== 'undefined') {
+    accessToken = localStorage.getItem('accessToken');
     refreshToken = localStorage.getItem('refreshToken');
   }
 
@@ -47,7 +48,7 @@ const Header = () => {
         scope: ''
       });
     };
-    const refresh = async (refreshToken) => {
+    const refresh = async () => {
       const response = await api.refresh(refreshToken);
       const data = await response.json();
       if (typeof window !== 'undefined') {
@@ -60,9 +61,9 @@ const Header = () => {
     // so that it gets called when our page loads or on every render
     gapi.load('client:auth2', initClient);
 
-    // refreshing accessToken and refreshToken
-    if (localStorage.getItem('accessToken') === 'undefined') {
-      refresh(refreshToken);
+    // refreshing accessToken and refreshToken when accessToken is outdated
+    if (accessToken === 'undefined') {
+      refresh();
     }
   });
 

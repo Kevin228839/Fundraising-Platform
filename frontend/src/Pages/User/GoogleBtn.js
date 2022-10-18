@@ -33,13 +33,9 @@ class GoogleBtn extends Component {
     super(props);
     if (typeof window !== 'undefined') {
       if (localStorage.getItem('accessToken')) {
-        this.state = {
-          isLogined: true
-        };
+        this.state = { isLogined: true };
       } else {
-        this.state = {
-          isLogined: false
-        };
+        this.state = { isLogined: false };
       }
     }
     this.login = this.login.bind(this);
@@ -68,9 +64,7 @@ class GoogleBtn extends Component {
   login (req) {
     const accessToken = this.handleLogin(req);
     if (accessToken) {
-      this.setState(state => ({
-        isLogined: true
-      }));
+      this.setState(state => ({ isLogined: true }));
     }
   }
 
@@ -85,9 +79,7 @@ class GoogleBtn extends Component {
 
   logout () {
     this.handleLogout();
-    this.setState(state => ({
-      isLogined: false
-    }));
+    this.setState(state => ({ isLogined: false }));
   }
 
   render () {
