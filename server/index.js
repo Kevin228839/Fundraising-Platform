@@ -33,9 +33,7 @@ app.use((err, _req, res, _next) => {
   res.status(statusCode).json({ message: err.message });
 });
 
-// app.listen(port, () => {
-//   console.log(`Example app is listening at port:${port}`);
-// });
+// https server
 https.createServer({
   key: fs.readFileSync('../ssl/key.pem'),
   cert: fs.readFileSync('../ssl/cert.pem')
