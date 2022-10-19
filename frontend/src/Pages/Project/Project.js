@@ -89,7 +89,6 @@ const Project = () => {
     };
     fetchProjectData();
   }, []);
-  console.log(projectData);
 
   if (projectData === null) {
     return <Load />;
