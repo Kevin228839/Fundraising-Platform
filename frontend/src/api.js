@@ -42,6 +42,18 @@ const api = {
       })
     });
   },
+  setWallet (accessToken, walletAddress) {
+    return fetch(`http://${this.hostname}/api/v1/setwallet`, {
+      method: 'PUT',
+      headers: new Headers({
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({
+        wallet: walletAddress
+      })
+    });
+  },
   refresh (refreshToken) {
     return fetch(`http://${this.hostname}/api/v1/refresh`, {
       method: 'POST',

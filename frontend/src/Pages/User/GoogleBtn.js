@@ -61,8 +61,8 @@ class GoogleBtn extends Component {
     }
   }
 
-  login (req) {
-    const accessToken = this.handleLogin(req);
+  async login (req) {
+    const accessToken = await this.handleLogin(req);
     if (accessToken) {
       this.setState(state => ({ isLogined: true }));
     }
@@ -77,8 +77,8 @@ class GoogleBtn extends Component {
     window.location.href = '/';
   }
 
-  logout () {
-    this.handleLogout();
+  async logout () {
+    await this.handleLogout();
     this.setState(state => ({ isLogined: false }));
   }
 

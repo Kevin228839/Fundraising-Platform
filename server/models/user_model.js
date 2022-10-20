@@ -47,23 +47,25 @@ const userGoogleLogin = async (req) => {
   try {
     // verify Google-provided token
     const { token } = req.body;
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.REACT_APP_GOOGLE_CLIENT_ID
-    });
-    // check against our database
-    const { sub, name, email, picture } = ticket.getPayload();
-    await conn.query(
-      `INSERT INTO User (googleId, name, email, picture) VALUES (?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE googleId=?, name=?, picture=?`, [sub, name, email, picture, sub, name, picture]
-    );
-    await conn.query('COMMIT');
+    if (token !== null) {
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.REACT_APP_GOOGLE_CLIENT_ID
+      });
+      // check against our database
+      const { sub, name, email, picture } = ticket.getPayload();
+      await conn.query(
+        `INSERT INTO User (googleId, name, email, picture, wallet) VALUES (?, ?, ?, ?, '0x')
+        ON DUPLICATE KEY UPDATE googleId=?, name=?, picture=?`, [sub, name, email, picture, sub, name, picture]
+      );
+      await conn.query('COMMIT');
 
-    // generate JWT tokens
-    const accessToken = await jwt.sign({ sub, name, email, picture }, process.env.ACCESS_SECRET, { expiresIn: '0.5h' });
-    const refreshToken = await jwt.sign({ sub, name, email, picture }, process.env.REFRESH_SECRET, { expiresIn: '1d' });
+      // generate JWT tokens
+      const accessToken = await jwt.sign({ sub, name, email, picture }, process.env.ACCESS_SECRET, { expiresIn: '0.5h' });
+      const refreshToken = await jwt.sign({ sub, name, email, picture }, process.env.REFRESH_SECRET, { expiresIn: '1d' });
 
-    return { accessToken, refreshToken };
+      return { accessToken, refreshToken };
+    }
   } catch (err) {
     console.error('Error while login with google!', err.message);
     await conn.query('ROLLBACK');
@@ -101,10 +103,34 @@ const getUserData = async (req) => {
   }
 };
 
+const setWallet = async (req) => {
+  const conn = await pool.getConnection();
+  try {
+    const accessToken = req.headers.authorization.split(' ')[1];
+    const { wallet } = req.body;
+    if (accessToken !== null) {
+      const decoded = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+      const [res] = await conn.query(
+        'UPDATE User SET wallet=? WHERE googleId=?', [wallet, decoded.sub]
+      );
+      await conn.query('COMMIT');
+
+      return { res };
+    }
+  } catch (err) {
+    console.error('Error while getting user data!', err.message);
+    await conn.query('ROLLBACK');
+    throw err;
+  } finally {
+    await conn.release();
+  }
+};
+
 module.exports = {
   verifyAccess,
   verifyRefresh,
   userGoogleLogin,
   userLogout,
-  getUserData
+  getUserData,
+  setWallet
 };

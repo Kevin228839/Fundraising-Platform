@@ -2,20 +2,20 @@ const UserModel = require('../models/user_model');
 
 // JWT middleware
 const verifyAccess = async (req, res, next) => {
-  await UserModel.verifyAccess(req);
-  next();
+  try {
+    await UserModel.verifyAccess(req);
+  } catch (err) {
+    next(err);
+  }
 };
 
-// JWT middleware
 const verifyRefresh = async (req, res, next) => {
   try {
     const response = await UserModel.verifyRefresh(req);
     res.status(401).json({
-      message: 'Get user data successful!',
+      message: 'Verify refresh token successful!',
       data: response
     });
-    // res.redirect('/');
-
     // res.clearCookie();
     // res.cookie('refreshToken', response.newRefreshToken, {
     //   sameSite: 'none',
@@ -51,7 +51,6 @@ const userLogout = async (req, res, next) => {
     await UserModel.userLogout();
     // res.clearCookie('refreshToken');
     res.status(201).json({ message: 'Logout successful!' });
-    // res.redirect('http://localhost:3000/');
   } catch (err) {
     next(err);
   }
@@ -70,10 +69,23 @@ const getUserData = async (req, res, next) => {
   }
 };
 
+const setWallet = async (req, res, next) => {
+  try {
+    const response = await UserModel.setWallet(req);
+    res.status(201).json({
+      message: 'Set wallet successful!',
+      data: response
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   verifyAccess,
   verifyRefresh,
   userGoogleLogin,
   userLogout,
-  getUserData
+  getUserData,
+  setWallet
 };
