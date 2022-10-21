@@ -88,7 +88,7 @@ const List = ({ projectList, setPage, page }) => {
                 return (
                   <ProjectContainer key={project.project_id}>
                     <Link to={'/project/' + project.project_id} >
-                    <ProjectImg src={project.project_image}/>
+                      <ProjectImg src={project.project_image}/>
                     </Link>
                     <ProjectName>{project.project_name}</ProjectName>
                     <ProjectCategory>{project.project_category}</ProjectCategory>

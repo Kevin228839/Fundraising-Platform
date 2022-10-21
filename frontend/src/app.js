@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Header from './Global/Header';
 import Home from './Pages/Home/Home';
 import Project from './Pages/Project/Project';
+import Profile from './Pages/User/Profile';
 import TopUp from './Pages/TopUp/TopUp';
 
 const App = () => {
@@ -11,9 +12,10 @@ const App = () => {
     <>
       <Header />
       <Routes>
-        <Route path='/' element={<Home page={page} setPage={setPage}/>}/>
+        <Route path='/' element={<Home page={page} setPage={setPage}/>} />
         <Route path='/project/:id' element={<Project />} />
         <Route path='/topup' element={<TopUp />} />
+        <Route path='/user' element={<Profile/>} />
       </Routes>
     </>
   );

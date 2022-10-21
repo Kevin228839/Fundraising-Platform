@@ -100,21 +100,31 @@ const TopUp = () => {
     }).catch(error => console.log(error));
   };
 
-  return (
-    <Container>
-      <Flex>
-      <Left>
-        <TopUpCaption>儲值金額</TopUpCaption>
-        <TopUpInput id="topupamount"/>
-      </Left>
-      <Right>
-        <CreditCardInfo>信用卡資訊</CreditCardInfo>
-        <TapPay getTPDirect={getTPDirect}/>
-      </Right>
-      </Flex>
-      <SubmitButton onClick={async () => { await handleChange(); }}>送出</SubmitButton>
-    </Container>
-  );
+  let accessToken;
+  if (typeof window !== 'undefined') {
+    accessToken = localStorage.getItem('accessToken');
+  }
+
+  if (accessToken === null || accessToken === 'undefined') {
+    alert('Please login first');
+    window.location.href = '/';
+  } else {
+    return (
+      <Container>
+        <Flex>
+        <Left>
+          <TopUpCaption>儲值金額</TopUpCaption>
+          <TopUpInput id="topupamount"/>
+        </Left>
+        <Right>
+          <CreditCardInfo>信用卡資訊</CreditCardInfo>
+          <TapPay getTPDirect={getTPDirect}/>
+        </Right>
+        </Flex>
+        <SubmitButton onClick={async () => { await handleChange(); }}>送出</SubmitButton>
+      </Container>
+    );
+  }
 };
 
 export default TopUp;

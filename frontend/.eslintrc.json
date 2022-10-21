@@ -19,6 +19,7 @@
     "rules": {
         "semi": [2, "always"],
         "react/react-in-jsx-scope": [0, "never"],
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "react/jsx-uses-react": "off"
     }
 }
