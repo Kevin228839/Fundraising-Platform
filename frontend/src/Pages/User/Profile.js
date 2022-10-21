@@ -127,11 +127,6 @@ const Profile = () => {
       console.log(responseData.data);
       window.location.reload();
     }
-    // api.setWallet(accessToken, WalletAccount).then(async (response) => {
-    //   const responseData = await response.json();
-    //   console.log(responseData.data);
-    //   window.location.reload();
-    // });
   };
 
   if (accessToken === null || accessToken === 'undefined') {

@@ -67,15 +67,6 @@ class GoogleBtn extends Component {
     }
   }
 
-  // async handleLogout () {
-  //   const accessToken = localStorage.getItem('accessToken');
-  //   await api.userLogout(accessToken);
-  //   if (typeof window !== 'undefined') {
-  //     localStorage.clear();
-  //   }
-  //   window.location.href = '/';
-  // }
-
   async handleLogout () {
     let accessToken, oldRefreshToken;
     try {
@@ -91,11 +82,6 @@ class GoogleBtn extends Component {
       const response = await api.verifyrefresh(oldRefreshToken);
       const data = await response.json();
       const newAccessToken = data.data.newAccessToken;
-      // const newRefreshToken = data.data.newRefreshToken;
-      // if (typeof window !== 'undefined') {
-      //   localStorage.setItem('accessToken', newAccessToken);
-      //   localStorage.setItem('refreshToken', newRefreshToken);
-      // }
       await api.userLogout(newAccessToken);
     } finally {
       if (typeof window !== 'undefined') {
