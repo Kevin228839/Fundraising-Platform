@@ -42,7 +42,7 @@ class GoogleBtn extends Component {
     this.logout = this.logout.bind(this);
   }
 
-  // Handling the response from Google
+  // Handling the response from Google and store self-made tokens in localStorage
   async handleLogin (googleData) {
     const response = await api.userGoogleLogin(googleData);
     const data = await response.json();
@@ -55,7 +55,6 @@ class GoogleBtn extends Component {
     if (data.error) {
       throw new Error(data.error);
     } else {
-      // store returned user in a context?
       console.log(data);
       return { accessToken };
     }
@@ -68,13 +67,42 @@ class GoogleBtn extends Component {
     }
   }
 
+  // async handleLogout () {
+  //   const accessToken = localStorage.getItem('accessToken');
+  //   await api.userLogout(accessToken);
+  //   if (typeof window !== 'undefined') {
+  //     localStorage.clear();
+  //   }
+  //   window.location.href = '/';
+  // }
+
   async handleLogout () {
-    const accessToken = localStorage.getItem('accessToken');
-    await api.userLogout(accessToken);
-    if (typeof window !== 'undefined') {
-      localStorage.clear();
+    let accessToken, oldRefreshToken;
+    try {
+      if (typeof window !== 'undefined') {
+        accessToken = localStorage.getItem('accessToken');
+      }
+      await api.userLogout(accessToken);
+    } catch (err) {
+      alert('access token is outdated!');
+      if (typeof window !== 'undefined') {
+        oldRefreshToken = localStorage.getItem('refreshToken');
+      }
+      const response = await api.verifyrefresh(oldRefreshToken);
+      const data = await response.json();
+      const newAccessToken = data.data.newAccessToken;
+      // const newRefreshToken = data.data.newRefreshToken;
+      // if (typeof window !== 'undefined') {
+      //   localStorage.setItem('accessToken', newAccessToken);
+      //   localStorage.setItem('refreshToken', newRefreshToken);
+      // }
+      await api.userLogout(newAccessToken);
+    } finally {
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+      }
+      window.location.href = '/';
     }
-    window.location.href = '/';
   }
 
   async logout () {

@@ -76,10 +76,28 @@ const Profile = () => {
 
   const [userData, setUserData] = useState(null);
   useEffect(() => {
+    let oldRefreshToken, response;
     const fetchUserData = async () => {
-      let response = await api.getUserData(accessToken);
-      response = await response.json();
-      setUserData(response.data.res[0]);
+      try {
+        response = await api.getUserData(accessToken);
+      } catch (err) {
+        alert('access token is outdated!');
+        if (typeof window !== 'undefined') {
+          oldRefreshToken = localStorage.getItem('refreshToken');
+        }
+        const responseData = await api.verifyrefresh(oldRefreshToken);
+        const data = await responseData.json();
+        const newAccessToken = data.data.newAccessToken;
+        const newRefreshToken = data.data.newRefreshToken;
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('accessToken', newAccessToken);
+          localStorage.setItem('refreshToken', newRefreshToken);
+        }
+        response = await api.getUserData(newAccessToken);
+      } finally {
+        response = await response.json();
+        setUserData(response.data.res[0]);
+      }
     };
     fetchUserData();
   }, []);
@@ -87,11 +105,33 @@ const Profile = () => {
 
   const handleUpdate = async () => {
     const WalletAccount = document.getElementById('walletaccount').value;
-    api.setWallet(accessToken, WalletAccount).then(async (response) => {
+    let oldRefreshToken, response;
+    try {
+      response = await api.setWallet(accessToken, WalletAccount);
+    } catch (err) {
+      alert('access token is outdated!');
+      if (typeof window !== 'undefined') {
+        oldRefreshToken = localStorage.getItem('refreshToken');
+      }
+      response = await api.verifyrefresh(oldRefreshToken);
+      const data = await response.json();
+      const newAccessToken = data.data.newAccessToken;
+      const newRefreshToken = data.data.newRefreshToken;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('accessToken', newAccessToken);
+        localStorage.setItem('refreshToken', newRefreshToken);
+      }
+      response = await api.setWallet(newAccessToken, WalletAccount);
+    } finally {
       const responseData = await response.json();
       console.log(responseData.data);
       window.location.reload();
-    });
+    }
+    // api.setWallet(accessToken, WalletAccount).then(async (response) => {
+    //   const responseData = await response.json();
+    //   console.log(responseData.data);
+    //   window.location.reload();
+    // });
   };
 
   if (accessToken === null || accessToken === 'undefined') {

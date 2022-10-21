@@ -1,18 +1,20 @@
 const UserModel = require('../models/user_model');
 
-// JWT middleware
+// access token middleware
 const verifyAccess = async (req, res, next) => {
   try {
     await UserModel.verifyAccess(req);
+    next();
   } catch (err) {
     next(err);
   }
 };
 
+// refresh access token when the current one is outdated
 const verifyRefresh = async (req, res, next) => {
   try {
     const response = await UserModel.verifyRefresh(req);
-    res.status(401).json({
+    res.status(201).json({
       message: 'Verify refresh token successful!',
       data: response
     });
@@ -60,7 +62,7 @@ const getUserData = async (req, res, next) => {
   try {
     const response = await UserModel.getUserData(req);
     console.log(`getUserData controller response: ${JSON.stringify(response)}`);
-    res.status(401).json({
+    res.status(201).json({
       message: 'Get user data successful!',
       data: response
     });

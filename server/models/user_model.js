@@ -16,6 +16,9 @@ const verifyAccess = async (req) => {
   }
 };
 
+// 把verifyRefresh寫進verifyAccess裡面
+// 將verifyRefresh回傳的值用next(response)傳到下一個model，再傳回前端設定於localstorage中
+// 上述行不通 ∵傳到下一個model的資料是已過期的accesstoken而不是新的accesstoken
 const verifyRefresh = async (req) => {
   let newAccessToken;
   let newRefreshToken;
