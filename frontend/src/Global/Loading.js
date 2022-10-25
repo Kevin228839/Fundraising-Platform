@@ -19,7 +19,6 @@ const Load = () => {
     <Container>
        <Img src={loading}/>
     </Container>
-
   );
 };
 

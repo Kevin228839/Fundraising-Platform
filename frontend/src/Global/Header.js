@@ -1,5 +1,9 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { gapi } from 'gapi-script';
+import GoogleBtn from '../Pages/User/GoogleBtn';
+import api from '../api';
 
 const Container = styled.div`
 height:70px;
@@ -31,6 +35,38 @@ color:black;
 text-decoration:none;`;
 
 const Header = () => {
+  let accessToken, refreshToken;
+  if (typeof window !== 'undefined') {
+    accessToken = localStorage.getItem('accessToken');
+    refreshToken = localStorage.getItem('refreshToken');
+  }
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.auth2.init({
+        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        scope: ''
+      });
+    };
+    const refresh = async () => {
+      const response = await api.refresh(refreshToken);
+      const data = await response.json();
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+        localStorage.setItem('accessToken', data.data.newAccessToken);
+        localStorage.setItem('refreshToken', data.data.newRefreshToken);
+      }
+    };
+    // To initialize our client, we will call the gapi function in our useEffect hook,
+    // so that it gets called when our page loads or on every render
+    gapi.load('client:auth2', initClient);
+
+    // refreshing accessToken and refreshToken when accessToken is outdated
+    if (accessToken === 'undefined') {
+      refresh();
+    }
+  });
+
   return (
     <Container>
       <StyledLink to={'/'}>
@@ -39,6 +75,7 @@ const Header = () => {
       <StyledLink to={'/topup'}>
         <TopUp>儲值</TopUp>
       </StyledLink>
+      <GoogleBtn/>
     </Container>
   );
 };
