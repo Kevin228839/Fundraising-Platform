@@ -1,5 +1,5 @@
 const api = {
-  hostname: 'localhost:8000',
+  hostname: `${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_PORT}`,
   getProjectList (page) {
     return fetch(`https://${this.hostname}/api/v1/projectlist?paging=${page}`, {
       headers: new Headers({
@@ -15,7 +15,7 @@ const api = {
     });
   },
   userGoogleLogin (googleData) {
-    return fetch(`http://${this.hostname}/api/v1/usergooglelogin`, {
+    return fetch(`https://${this.hostname}/api/v1/usergooglelogin`, {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ const api = {
     });
   },
   userLogout (accessToken) {
-    return fetch(`http://${this.hostname}/api/v1/userlogout`, {
+    return fetch(`https://${this.hostname}/api/v1/userlogout`, {
       method: 'POST',
       headers: new Headers({
         Authorization: `Bearer ${accessToken}`,
@@ -35,7 +35,7 @@ const api = {
     });
   },
   getUserData (accessToken) {
-    return fetch(`http://${this.hostname}/api/v1/user`, {
+    return fetch(`https://${this.hostname}/api/v1/user`, {
       headers: new Headers({
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
@@ -43,7 +43,7 @@ const api = {
     });
   },
   setWallet (accessToken, walletAddress) {
-    return fetch(`http://${this.hostname}/api/v1/setwallet`, {
+    return fetch(`https://${this.hostname}/api/v1/setwallet`, {
       method: 'PUT',
       headers: new Headers({
         Authorization: `Bearer ${accessToken}`,
@@ -55,7 +55,7 @@ const api = {
     });
   },
   refresh (refreshToken) {
-    return fetch(`http://${this.hostname}/api/v1/refresh`, {
+    return fetch(`https://${this.hostname}/api/v1/refresh`, {
       method: 'POST',
       headers: new Headers({
         Authorization: `Bearer ${refreshToken}`,
