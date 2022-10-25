@@ -1,8 +1,8 @@
-pragma solidity ^0.5.0;
+pragma solidity >= 0.5.0;
 
-contract MUsdt {
-    string  public name = "MUsdt Token";
-    string  public symbol = "MUsdt";
+contract MTwd {
+    string  public name = "MTwd Token";
+    string  public symbol = "MTwd";
     uint256 public totalSupply = 1000000000000000000000000000; // 1 billion tokens
     uint8   public decimals = 18;
 

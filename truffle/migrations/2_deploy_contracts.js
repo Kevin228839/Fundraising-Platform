@@ -1,4 +1,4 @@
-const MUsdt = artifacts.require("MUsdt");
+const MTwd = artifacts.require("MTwd");
 const AToken = artifacts.require("Atoken");
 const StakeA = artifacts.require("StakeA");
 const RedeemPoolA = artifacts.require("RedeemPoolA")
@@ -7,16 +7,16 @@ const RedeemPoolA = artifacts.require("RedeemPoolA")
 module.exports = async function (deployer, network, accounts) {
 
 
-  // deploy MUsdt
-  await deployer.deploy(MUsdt);
-  const musdt = await MUsdt.deployed()
+  // deploy MTwd
+  await deployer.deploy(MTwd);
+  const mtwd = await MTwd.deployed()
 
   // deploy AToken
   await deployer.deploy(AToken);
   const atoken = await AToken.deployed()
 
   //deploy StakeA
-  await deployer.deploy(StakeA, musdt.address, atoken.address);
+  await deployer.deploy(StakeA, mtwd.address, atoken.address);
   const stakeA = await StakeA.deployed()
 
   //deploy RedeemPoolA
@@ -24,8 +24,8 @@ module.exports = async function (deployer, network, accounts) {
   const redeemPoolA = await RedeemPoolA.deployed()
 
 
-  //transfer 1000 MUsdt to investor
-  await musdt.transfer(accounts[1], '1000000000000000000000')
+  //transfer 1000 MTwd to investor
+  await mtwd.transfer(accounts[1], '1000000000000000000000')
 
 
 
