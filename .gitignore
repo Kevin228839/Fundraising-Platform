@@ -3,4 +3,3 @@ node_modules
 .env
 *.pem
 secret.json
-ssl

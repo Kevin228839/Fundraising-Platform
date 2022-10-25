@@ -53,7 +53,7 @@
   "sourceMap": "66:352:2:-;;;113:10;90:33;;;;;;;;;;;;;;;;;;;;66:352;8:9:-1;5:2;;;30:1;27;20:12;5:2;66:352:2;;;;;;;",
   "deployedSourceMap": "66:352:2:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;66:352:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;127:36;;;:::i;:::-;;;;;;;;;;;;;;;;;;;90:33;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;313:103;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;313:103:2;;;;;;;;;;;;;;;;;:::i;:::-;;127:36;;;;:::o;90:33::-;;;;;;;;;;;;;:::o;313:103::-;225:5;;;;;;;;;;;211:19;;:10;:19;;;196:101;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;402:9;375:24;:36;;;;313:103;:::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity >=0.4.22 <0.9.0;\n\ncontract Migrations {\n  address public owner = msg.sender;\n  uint public last_completed_migration;\n\n  modifier restricted() {\n    require(\n      msg.sender == owner,\n      \"This function is restricted to the contract's owner\"\n    );\n    _;\n  }\n\n  function setCompleted(uint completed) public restricted {\n    last_completed_migration = completed;\n  }\n}\n",
-  "sourcePath": "/Users/kevinli/Documents/school_project/contracts/Migrations.sol",
+  "sourcePath": "/Users/kevin/Desktop/Fundraising-Platform/truffle/contracts/Migrations.sol",
   "ast": {
     "absolutePath": "project:/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -123,7 +123,7 @@
                 "name": "msg",
                 "nodeType": "Identifier",
                 "overloadedDeclarations": [],
-                "referencedDeclaration": 637,
+                "referencedDeclaration": 724,
                 "src": "113:3:2",
                 "typeDescriptions": {
                   "typeIdentifier": "t_magic_message",
@@ -201,7 +201,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 637,
+                            "referencedDeclaration": 724,
                             "src": "211:3:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -277,10 +277,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        640,
-                        641
+                        727,
+                        728
                       ],
-                      "referencedDeclaration": 641,
+                      "referencedDeclaration": 728,
                       "src": "196:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -541,7 +541,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 637,
+                      "referencedDeclaration": 724,
                       "type": "msg",
                       "value": "msg"
                     },
@@ -635,10 +635,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                640,
-                                641
+                                727,
+                                728
                               ],
-                              "referencedDeclaration": 641,
+                              "referencedDeclaration": 728,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -679,7 +679,7 @@
                                       "overloadedDeclarations": [
                                         null
                                       ],
-                                      "referencedDeclaration": 637,
+                                      "referencedDeclaration": 724,
                                       "type": "msg",
                                       "value": "msg"
                                     },
@@ -912,27 +912,21 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
-    "3": {
-      "events": {},
-      "links": {},
-      "address": "0xcec8b9B24aBab28374B6201AFC96458503B153B0",
-      "transactionHash": "0x698ba659899f782dcb6020adf8855c554b1f8c6cf670016ddb4345c7bea2ab25"
-    },
-    "4": {
-      "events": {},
-      "links": {},
-      "address": "0xcec8b9B24aBab28374B6201AFC96458503B153B0",
-      "transactionHash": "0x30943d9714bcc538102be0c852ae2116b7735a435c13782302e3be722e4fd37b"
-    },
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x0E6479C8bf4af0cb7c5efD98AB680e88b8E209f1",
-      "transactionHash": "0x746363c82d2f016f62264e39b878b42a186121d10d6470c180197801d1da6e42"
+      "address": "0x3e6FdBdD6B839CcC0aF164Cdc1fA4cE7b27b389e",
+      "transactionHash": "0x8341c7da8e28c54c106b4a101e1c4bef69515855220fffb4df74c9173c3f876d"
+    },
+    "11155111": {
+      "events": {},
+      "links": {},
+      "address": "0xcec8b9B24aBab28374B6201AFC96458503B153B0",
+      "transactionHash": "0x71abc113029eaac33a1f436a8f9245eaa415263b7cc1ca4613f0e1b11673221f"
     }
   },
-  "schemaVersion": "3.4.5",
-  "updatedAt": "2022-04-19T18:05:36.889Z",
+  "schemaVersion": "3.4.8",
+  "updatedAt": "2022-10-25T16:38:14.322Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
