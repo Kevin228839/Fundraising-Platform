@@ -24,8 +24,9 @@ module.exports = async function (deployer, network, accounts) {
   const redeemPoolA = await RedeemPoolA.deployed()
 
 
-  //transfer 1000 MUsdt to investor
-  await musdt.transfer(accounts[1], '1000000000000000000000')
+  // only for local test
+  //transfer 1000 MUsdt to investor 
+  // await musdt.transfer(accounts[1], '1000000000000000000000')
 
 
 
