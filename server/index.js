@@ -38,8 +38,8 @@ app.use((err, _req, res, _next) => {
 
 // https server
 https.createServer({
-  key: fs.readFileSync('../ssl/key.pem'),
-  cert: fs.readFileSync('../ssl/cert.pem')
+  key: fs.readFileSync('../ssl/private.key'),
+  cert: fs.readFileSync('../ssl/certificate.crt')
 }, app).listen(port, () => {
   console.log(`Example app is listening at port:${port}`);
 });
