@@ -1,5 +1,5 @@
 const api = {
-  hostname: `${process.env.REACT_APP_SERVER}:${process.env.REACT_APP_PORT}`,
+  hostname: `${process.env.REACT_APP_SERVER}`,
   getProjectList (page) {
     return fetch(`https://${this.hostname}/api/v1/projectlist?paging=${page}`, {
       headers: new Headers({
