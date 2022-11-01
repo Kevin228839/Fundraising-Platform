@@ -27,6 +27,7 @@ class RedeempoolA extends Component {
     const web3 = window.web3;
 
     const accounts = await web3.eth.getAccounts();
+    console.log(accounts[0]);
     this.setState({ account: accounts[0] });
 
     const networkId = await web3.eth.net.getId();
@@ -69,8 +70,8 @@ class RedeempoolA extends Component {
 
   stakeTokens = (amount) => {
     this.setState({ loading: true });
-    this.state.pdAToken.methods.approve(this.state.RedeempdA._address, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.state.RedeempdA.methods.stakeTokens(amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+    this.state.pdAToken.methods.approve(this.state.RedeempdA._address, amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
+      this.state.RedeempdA.methods.redeem(amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
         this.setState({ loading: false });
       });
     });

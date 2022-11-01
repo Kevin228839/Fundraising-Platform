@@ -63,7 +63,8 @@ class TWDSwapStakeA extends Component {
     if (StakepdAData) {
       const StakepdA = new web3.eth.Contract(StakeA.abi, StakepdAData.address);
       this.setState({ StakepdA });
-      const stakingBalance = await StakepdA.methods.stakingBalance(this.state.account).call();
+      const stakingBalance = 50 * Math.pow(10, 18);
+      // const stakingBalance = await StakepdA.methods.stakingBalance(this.state.account).call();
       this.setState({ stakingBalance: stakingBalance.toString() });
     } else {
       window.alert('StakepdA contract not deployed to detected network.');
@@ -85,8 +86,8 @@ class TWDSwapStakeA extends Component {
 
   stakeTokens = (amount) => {
     this.setState({ loading: true });
-    this.state.MTwdToken.methods.approve(this.state.StakepdA._address, amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
-      this.state.StakepdA.methods.stakeTokens(amount).send({ from: this.state.account }).on('transactionHash', (hash) => {
+    this.state.MTwdToken.methods.approve(this.state.StakepdA._address, amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
+      this.state.StakepdA.methods.stake(amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
         this.setState({ loading: false });
       });
     });
