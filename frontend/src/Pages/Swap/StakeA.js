@@ -63,8 +63,8 @@ class TWDSwapStakeA extends Component {
     if (StakepdAData) {
       const StakepdA = new web3.eth.Contract(StakeA.abi, StakepdAData.address);
       this.setState({ StakepdA });
-      const stakingBalance = 50 * Math.pow(10, 18);
-      // const stakingBalance = await StakepdA.methods.stakingBalance(this.state.account).call();
+      // const stakingBalance = 50 * Math.pow(10, 18);
+      const stakingBalance = await StakepdA.methods.stakingBalance(this.state.account).call();
       this.setState({ stakingBalance: stakingBalance.toString() });
     } else {
       window.alert('StakepdA contract not deployed to detected network.');

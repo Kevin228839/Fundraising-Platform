@@ -95,6 +95,7 @@ contract('StakeA', ([owner, investor]) => {
 			//check pool's mtwd amount is 500
 			result = await mtwd.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('500'))
+
 		})
 	})
 
@@ -132,9 +133,14 @@ contract('StakeA', ([owner, investor]) => {
 			await mtwd.approve(stakeA.address, token('4'), {from : investor})
 			await stakeA.stake(token('5.5'), {from : investor})
 
+			//investor staking balance correct after staking
+			result = await stakeA.stakingBalance(investor)
+			assert.equal(result.toString(), tokens('4'))
+
 			//check investor's mtwd amount is 996
 			result = await mtwd.balanceOf(investor)
 			assert.equal(result.toString(), token('996'))
+
 
 			//check investor's token A amount is 2
 			result = await atoken.balanceOf(investor)
@@ -147,6 +153,7 @@ contract('StakeA', ([owner, investor]) => {
 			//check pool's token A amount is 298
 			result = await atoken.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('298'))
+
 		})
 	})
 

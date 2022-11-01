@@ -80,7 +80,7 @@
   "sourceMap": "49:635:3:-;;;73:36;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;159:124;8:9:-1;5:2;;;30:1;27;20:12;5:2;159:124:3;;;;;;;;;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;159:124:3;;;;;;;;;;;;;;;;207:7;198:6;;:16;;;;;;;;;;;;;;;;;;269:10;261:5;;:18;;;;;;;;;;;;;;;;;;159:124;49:635;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;",
   "deployedSourceMap": "49:635:3:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;49:635:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;73:36;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;73:36:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;135:20;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;112;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;286:395;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;286:395:3;;;;;;;;;;;;;;;;;:::i;:::-;;73:36;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;135:20::-;;;;;;;;;;;;;:::o;112:::-;;;;;;;;;;;;;:::o;286:395::-;424:8;392:6;;;;;;;;;;;:16;;;409:10;392:28;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;392:28:3;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;392:28:3;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;392:28:3;;;;;;;;;;;;;;;;:40;;384:49;;;;;;476:9;488:6;476:18;;558:24;596:4;585:8;:15;;;;;;558:42;;605:6;;;;;;;;;;;:19;;;625:10;645:4;672;652:19;:24;605:72;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;605:72:3;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;605:72:3;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;605:72:3;;;;;;;;;;;;;;;;;286:395;;;:::o",
   "source": "pragma solidity ^0.5.0;\n\nimport \"./AToken.sol\";\n\ncontract RedeemPoolA {\n\tstring public name = \"Redeem Pool A\";\n\tAToken public atoken;\n\taddress public owner;\n\n\tconstructor(AToken _atoken) public {\n\t\tatoken = _atoken;\n\t\t// set deployer as owner of the contract\n\t\towner = msg.sender;\n\t}\n\n\tfunction redeem (uint _amountA) public {\n\n\t\t//investors cannot stake more atoken than they have\n\t\trequire(atoken.balanceOf(msg.sender) >= _amountA);\n\n\t\t//erc20 token: 1 ether == 10^18 wei\n\t\tuint unit = 10**18;\n\n\t\t//calculate how much A token to transfer to redeem pool \n\t\tuint amountATokenInEther = _amountA / unit;\n\n\t\tatoken.transferFrom(msg.sender, address(this), amountATokenInEther*unit);\n\t}\n\n}\n",
-  "sourcePath": "/Users/wangpeiyi/Desktop/Fundraising-Platform/truffle/contracts/RedeemPoolA.sol",
+  "sourcePath": "C:\\Users\\A0928\\OneDrive\\文件\\GitHub\\Fundraising-Platform\\truffle\\contracts\\RedeemPoolA.sol",
   "ast": {
     "absolutePath": "project:/contracts/RedeemPoolA.sol",
     "exportedSymbols": {
@@ -307,7 +307,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 724,
+                        "referencedDeclaration": 740,
                         "src": "269:3:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -426,7 +426,7 @@
                                 "name": "msg",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 724,
+                                "referencedDeclaration": 740,
                                 "src": "409:3:3",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_message",
@@ -529,10 +529,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        727,
-                        728
+                        743,
+                        744
                       ],
-                      "referencedDeclaration": 727,
+                      "referencedDeclaration": 743,
                       "src": "384:7:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -741,7 +741,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 724,
+                          "referencedDeclaration": 740,
                           "src": "625:3:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -771,7 +771,7 @@
                             "name": "this",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 744,
+                            "referencedDeclaration": 760,
                             "src": "645:4:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_contract$_RedeemPoolA_$461",
@@ -1293,7 +1293,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 724,
+                                  "referencedDeclaration": 740,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -1414,10 +1414,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                727,
-                                728
+                                743,
+                                744
                               ],
-                              "referencedDeclaration": 727,
+                              "referencedDeclaration": 743,
                               "type": "function (bool) pure",
                               "value": "require"
                             },
@@ -1509,7 +1509,7 @@
                                           "overloadedDeclarations": [
                                             null
                                           ],
-                                          "referencedDeclaration": 724,
+                                          "referencedDeclaration": 740,
                                           "type": "msg",
                                           "value": "msg"
                                         },
@@ -1813,7 +1813,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 724,
+                                  "referencedDeclaration": 740,
                                   "type": "msg",
                                   "value": "msg"
                                 },
@@ -1866,7 +1866,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 744,
+                                  "referencedDeclaration": 760,
                                   "type": "contract RedeemPoolA",
                                   "value": "this"
                                 },
@@ -1965,12 +1965,12 @@
     "11155111": {
       "events": {},
       "links": {},
-      "address": "0x68B2D6fB7AF02a851a8D7C6C593b8B7aaBbbb8fa",
-      "transactionHash": "0x3af871b4b9aca286699e8b655f2528f81d6e8d960bff5256ad9ada4e6d80851d"
+      "address": "0x959aE52B7757d0C045960be77Bf91c45dBB70258",
+      "transactionHash": "0xc906aef7d2667b0580d7593e4305b8228c17e302fd22324337eefa7646906ba8"
     }
   },
-  "schemaVersion": "3.4.10",
-  "updatedAt": "2022-10-24T15:44:36.402Z",
+  "schemaVersion": "3.4.6",
+  "updatedAt": "2022-11-01T10:23:13.524Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

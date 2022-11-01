@@ -1,18 +1,17 @@
 /* eslint-disable react/no-deprecated */
 import { Component } from 'react';
 import Web3 from 'web3';
-
 import AToken from './abi/AToken.json';
-import RedeempdA from './abi/RedeemPoolA.json';
+import RedeemPoolA from './abi/RedeemPoolA.json';
 import Main from './redeem_pool_frontend.js';
 
-class RedeempoolA extends Component {
+class RedeempdA extends Component {
   constructor (props) {
     super(props);
     this.state = {
       account: '0x0',
       pdAToken: {},
-      RedeempdA: {},
+      RedeemPoolpdA: {},
       pdATokenBalance: '0',
       loading: true
     };
@@ -43,15 +42,15 @@ class RedeempoolA extends Component {
       window.alert('pdAToken contract not deployed to detected network.');
     }
 
-    // Load RedeempdA
-    const RedeempdAData = RedeempdA.networks[networkId];
-    if (RedeempdAData) {
-      const RedeempoolpdA = new web3.eth.Contract(RedeempdA.abi, RedeempdAData.address);
-      this.setState({ RedeempoolpdA });
-    //   const stakingBalance = await RedeempoolpdA.methods.stakingBalance(this.state.account).call();
+    // Load RedeemPoolA
+    const RedeemPoolAData = RedeemPoolA.networks[networkId];
+    if (RedeemPoolAData) {
+      const RedeemPoolpdA = new web3.eth.Contract(RedeemPoolA.abi, RedeemPoolAData.address);
+      this.setState({ RedeemPoolpdA });
+    //   const stakingBalance = await RedeemPoolpdA.methods.stakingBalance(this.state.account).call();
     //   this.setState({ stakingBalance: stakingBalance.toString() });
     } else {
-      window.alert('RedeempdA contract not deployed to detected network.');
+      window.alert('RedeemPoolpdA contract not deployed to detected network.');
     }
 
     this.setState({ loading: false });
@@ -70,8 +69,8 @@ class RedeempoolA extends Component {
 
   stakeTokens = (amount) => {
     this.setState({ loading: true });
-    this.state.pdAToken.methods.approve(this.state.RedeempdA._address, amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
-      this.state.RedeempdA.methods.redeem(amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
+    this.state.pdAToken.methods.approve(this.state.RedeemPoolpdA._address, amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
+      this.state.RedeemPoolpdA.methods.redeem(amount).send({ from: this.state.account, gasLimit: 10000000 }).on('transactionHash', (hash) => {
         this.setState({ loading: false });
       });
     });
@@ -111,4 +110,4 @@ class RedeempoolA extends Component {
   }
 }
 
-export default RedeempoolA;
+export default RedeempdA;
