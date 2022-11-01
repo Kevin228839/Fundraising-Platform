@@ -8,8 +8,11 @@ contract StakeA {
 	MTwd public mtwd;
 	AToken public atoken;
 	address public owner;
-	//set transfer rate
-	uint public rateStake = 2;
+	//set transfer rate   
+	uint public rateStake = 1;
+
+	//add stakingBalance
+    mapping(address => uint) public stakingBalance;
 	
 	
 
@@ -70,15 +73,11 @@ contract StakeA {
 
 		//transfer A token from pool to investor
 		atoken.transfer(msg.sender, amountATokenInEther*unit);
+
+		// Update staking balance
+        stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amountTwd;
+
 	}
-
-
-
-
-
-
-
-
 
 
 }
