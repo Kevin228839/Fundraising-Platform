@@ -4,7 +4,7 @@ const port = 8000;
 const cors = require('cors');
 // const session = require('express-session');
 // const oneHour = 1000 * 60 * 60 * 1;
-const cookieparser = require('cookie-parser');
+// const cookieparser = require('cookie-parser');
 const ProjectRouter = require('./routes/project_route');
 const UserRouter = require('./routes/user_route');
 const PaymentRouter = require('./routes/payment_route');
@@ -17,13 +17,9 @@ const PaymentRouter = require('./routes/payment_route');
 //   resave: true
 // }));
 
-app.use(cors({
-  'Access-Control-Allow-Origin': 'http://localhost:3000',
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
-// sign for cookie
-app.use(cookieparser());
+app.use(cors());
+// // sign for cookie
+// app.use(cookieparser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import api from '../../api';
@@ -78,6 +78,12 @@ border:solid 1px #888888;
 border-radius: 5px;
 font-size:20px;`;
 
+const StyledLink = styled(Link)`
+letter-spacing:1em;
+font-size:20px;
+color:black;
+text-decoration:none;`;
+
 const Project = () => {
   const id = useParams().id;
   const [projectData, setProjectData] = useState(null);
@@ -107,7 +113,12 @@ const Project = () => {
             <ProjectDetail>{projectData.project_detail}</ProjectDetail>
             <ProjectDayRemain>剩下{ TimeDiff(new Date(), projectData.project_end_time) }天</ProjectDayRemain>
             <ProjectRaisingTarget>目標: NT$ {projectData.project_target_amount}</ProjectRaisingTarget>
-            <DonateButton>我要贊助</DonateButton>
+            <StyledLink to={'/project/' + id + '/swap'}>
+              <DonateButton>我要贊助</DonateButton>
+            </StyledLink>
+            <StyledLink to={'/project/' + id + '/redeem'}>
+              <DonateButton>我要兌換</DonateButton>
+            </StyledLink>
           </Right>
         </Container>
       </Wrap>

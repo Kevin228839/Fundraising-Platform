@@ -1,4 +1,4 @@
-const MUsdt = artifacts.require("MUsdt");
+const MTwd = artifacts.require("MTwd");
 const AToken = artifacts.require("AToken");
 const StakeA = artifacts.require("StakeA");
 const RedeemPoolA = artifacts.require("RedeemPoolA")
@@ -12,25 +12,28 @@ function token(n) {
 }
 
 contract('StakeA', ([owner, investor]) => {
-	let musdt, atoken, stakeA, redeemPoolA
+	let mtwd, atoken, stakeA, redeemPoolA
 	before(async() => {
 		//load contract
-		musdt = await MUsdt.new()
+		mtwd = await MTwd.new()
 		atoken = await AToken.new()
-		stakeA = await StakeA.new(musdt.address, atoken.address)
+		stakeA = await StakeA.new(mtwd.address, atoken.address)
 		redeemPoolA = await RedeemPoolA.new(atoken.address)
 
-		//send 1000 Musdt to investor
-		await musdt.transfer(investor, token('1000'), {from:owner})
+		
+
+		//send 1000 Mtwd to investor
+		await mtwd.transfer(investor, token('1000'), {from:owner})
+
 	})
 
-	describe("Musdt deployment", async() => {
+	describe("Mtwd deployment", async() => {
 		it('has a name', async() => {
-			const name = await musdt.name()
-			assert.equal(name, "MUsdt Token")
+			const name = await mtwd.name()
+			assert.equal(name, "MTwd Token")
 		})
-		it('investor has 1000 musdt', async() => {
-			const balance = await musdt.balanceOf(investor)
+		it('investor has 1000 mtwd', async() => {
+			const balance = await mtwd.balanceOf(investor)
 			assert.equal(balance,token('1000'))
 		})
 	})
@@ -64,12 +67,12 @@ contract('StakeA', ([owner, investor]) => {
 	})
 
 	describe("add liquidity", async() => {
-		it('owner successfully added 500 AToken and 500 MUsdt to pool', async() => {
+		it('owner successfully added 500 AToken and 500 MTwd to pool', async() => {
 			let result
 
-			//check pool's musdt is equal to 0 before adding liquidity
-			const balanceUsdt = await musdt.balanceOf(stakeA.address)
-			assert.equal(balanceUsdt, token('0'))
+			//check pool's mtwd is equal to 0 before adding liquidity
+			const balanceTwd = await mtwd.balanceOf(stakeA.address)
+			assert.equal(balanceTwd, token('0'))
 
 			//check pool's A token is equal to 0 before adding liquidity
 			const balanceTokenA = await atoken.balanceOf(stakeA.address)
@@ -77,44 +80,44 @@ contract('StakeA', ([owner, investor]) => {
 
 			//add liquidity(500 each)
 			await atoken.approve(stakeA.address, token('500'), { from: owner })
-			await musdt.approve(stakeA.address, token('500'), { from: owner })
+			await mtwd.approve(stakeA.address, token('500'), { from: owner })
 			await stakeA.addLiquidity(token('500'),token('500'),{ from:owner })
 
 			//check owner's token A amount is 500
 			result = await atoken.balanceOf(owner)
 			assert.equal(result.toString(), token('500'))
 
-			//check owner's musdt amount is 999998500
-			result = await musdt.balanceOf(owner)
+			//check owner's mtwd amount is 999998500
+			result = await mtwd.balanceOf(owner)
 			assert.equal(result.toString(), token('999998500'))
 
 			//check pool's token A amount is 500
 			result = await atoken.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('500'))
 
-			//check pool's musdt amount is 500
-			result = await musdt.balanceOf(stakeA.address)
+			//check pool's mtwd amount is 500
+			result = await mtwd.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('500'))
 		})
 	})
 
 	describe("withdraw liquidity", async() => {
-		it('owner successfully withdrew 200 AToken and 200 MUSDT from pool', async() => {
+		it('owner successfully withdrew 200 AToken and 200 MTWD from pool', async() => {
 			let result
 
 			//withdraw liquidity(200 each)
 			await stakeA.withdrawLiquidity(token('200'), token('200'), { from:owner })
 
-			//check owner's musdt is 999998700
-			result = await musdt.balanceOf(owner)
+			//check owner's mtwd is 999998700
+			result = await mtwd.balanceOf(owner)
 			assert.equal(result.toString(), token('999998700'))
 
 			//check owner's token A is 700
 			result = await atoken.balanceOf(owner)
 			assert.equal(result.toString(), token('700'))
 
-			//check pool's musdt amount is 300
-			result = await musdt.balanceOf(stakeA.address)
+			//check pool's mtwd amount is 300
+			result = await mtwd.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('300'))
 
 			//check pool's token A amount is 300
@@ -124,29 +127,36 @@ contract('StakeA', ([owner, investor]) => {
 		})
 	})
 
-	describe("Stake musdt and get token A", async() => {
-		it('investor successfully staked 1 MUsdt for 1 A token ', async() => {
+	describe("Stake mtwd and get token A", async() => {
+		it('investor successfully staked 1 MTwd for 1 A token ', async() => {
 			let result
 
-			//stake 5.5 musdt (only 4 is staked actually)
-			await musdt.approve(stakeA.address, token('4'), {from : investor})
-			await stakeA.stake(token('5.5'), {from : investor})
+			//stake 5.5 mtwd (only 4 is staked actually)
+			await mtwd.approve(stakeA.address, token('4'), {from : investor})
+			await stakeA.stake(token('4'), {from : investor})
 
-			//check investor's musdt amount is 996
-			result = await musdt.balanceOf(investor)
+			//check investor's mtwd amount is 996
+			result = await mtwd.balanceOf(investor)
 			assert.equal(result.toString(), token('996'))
 
-			//check investor's token A amount is 2
+			//check investor's token A amount is 4
 			result = await atoken.balanceOf(investor)
-			assert.equal(result.toString(), token('2'))
+			assert.equal(result.toString(), token('4'))
 
-			//check pool's musdt amount is 304
-			result = await musdt.balanceOf(stakeA.address)
+			//check pool's mtwd amount is 304
+			result = await mtwd.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('304'))
 
-			//check pool's token A amount is 298
+			//check pool's token A amount is 296
 			result = await atoken.balanceOf(stakeA.address)
-			assert.equal(result.toString(), token('298'))
+			assert.equal(result.toString(), token('296'))
+
+			//check investor's stakingBalance after staking'
+			result = await stakeA.stakingBalance(investor)
+			assert.equal(result.toString(), token('4'))
+
+
+
 		})
 	})
 
@@ -160,25 +170,13 @@ contract('StakeA', ([owner, investor]) => {
 
 			//check investor's token A amount is 1
 			result = await atoken.balanceOf(investor)
-			assert.equal(result.toString(), token('1'))
+			assert.equal(result.toString(), token('3'))
 
 			//check RedeemPoolA's token A amount is 1
 			result = await atoken.balanceOf(redeemPoolA.address)
 			assert.equal(result.toString(), token('1'))
 		})
 	})
-
-
-
-
-
-
-
-
-
-
-
-	
 
 
 })

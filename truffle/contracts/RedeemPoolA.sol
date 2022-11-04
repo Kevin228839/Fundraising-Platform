@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity >= 0.5.0;
 
 import "./AToken.sol";
 
@@ -25,6 +25,8 @@ contract RedeemPoolA {
 		uint amountATokenInEther = _amountA / unit;
 
 		atoken.transferFrom(msg.sender, address(this), amountATokenInEther*unit);
+		//atoken.transferFrom(msg.sender, address(this), _amountA);
+		
 	}
 
 }
