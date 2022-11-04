@@ -3,7 +3,7 @@ import styles from './metamask-auth.module.css';
 
 async function connect (onConnected) {
   if (!window.ethereum) {
-    alert('Get MetaMask!');
+    alert('Cannot Get MetaMask!');
     return;
   }
 
@@ -43,7 +43,6 @@ function Address ({ userAddress }) {
 
 export default function MetaMaskAuth () {
   const [userAddress, setUserAddress] = useState(null);
-  // const [userBalance, setUserBalance] = useState(null);
 
   useEffect(() => {
     checkIfWalletIsConnected(setUserAddress);

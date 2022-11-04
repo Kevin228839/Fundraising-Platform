@@ -20,7 +20,7 @@ const TopUp = async (Data) => {
   };
   const response = await axios.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime', postData, { headers: { 'x-api-key': 'partner_NpJg8vS4RGgjtUIJSisEgsHO1F4UvrkDSDNVDwEcnjOS3WlDYS8CsLdu' } });
   if (response.data.status === 0) {
-    const tx = await sendMTwd(Data.topUpAmount);
+    const tx = await sendMTwd(Data.topUpAmount, Data.addrress);
     console.log(tx);
     return { data: tx.hash };
   } else {

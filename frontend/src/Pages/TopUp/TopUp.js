@@ -1,6 +1,7 @@
 import TapPay from './TapPay';
 import styled from 'styled-components';
 import api from '../../api';
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
 width:100%;
@@ -52,6 +53,30 @@ border: 3px solid grey;
 border-radius:5px;`;
 
 const TopUp = () => {
+  const [addr, setAddr] = useState(null);
+
+  useEffect(() => {
+    let accessToken;
+    if (typeof window !== 'undefined') {
+      accessToken = localStorage.getItem('accessToken');
+    }
+    if (accessToken === null || accessToken === 'undefined') {
+      alert('Please login first');
+      window.location.href = '/';
+      return;
+    }
+    const checkMetaMask = async () => {
+      // Asking if metamask is already present or not
+      if (window.ethereum) {
+        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAddr(account[0]);
+      } else {
+        alert('Metamask is not detected!');
+      }
+    };
+    checkMetaMask();
+  }, []);
+
   // getTPDirect function
   const getTPDirect = async () => {
     return new Promise((resolve, reject) => {
@@ -75,6 +100,12 @@ const TopUp = () => {
   };
 
   const handleChange = async () => {
+    if (addr === null) {
+      alert('Not connected to Metamask');
+      return;
+    }
+    console.log(addr);
+    // start tappay
     const TopUpAmount = document.getElementById('topupamount').value;
     getTPDirect().then((TPDirect) => {
       const tappayStatus = TPDirect.card.getTappayFieldsStatus();
@@ -90,26 +121,18 @@ const TopUp = () => {
         const Prime = result.card.prime;
         const Data = {
           prime: Prime,
-          topUpAmount: TopUpAmount
+          topUpAmount: TopUpAmount,
+          addrress: addr
         };
         api.topUp(Data).then(async (response) => {
           const responseData = await response.json();
+          alert('TXID: ' + responseData.data);
           console.log(responseData.data);
         });
       });
     }).catch(error => console.log(error));
   };
-
-  let accessToken;
-  if (typeof window !== 'undefined') {
-    accessToken = localStorage.getItem('accessToken');
-  }
-
-  if (accessToken === null || accessToken === 'undefined') {
-    alert('Please login first');
-    window.location.href = '/';
-  } else {
-    return (
+  return (
       <Container>
         <Flex>
         <Left>
@@ -123,8 +146,7 @@ const TopUp = () => {
         </Flex>
         <SubmitButton onClick={async () => { await handleChange(); }}>送出</SubmitButton>
       </Container>
-    );
-  }
+  );
 };
 
 export default TopUp;

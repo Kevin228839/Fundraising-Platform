@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 import GoogleBtn from '../Pages/User/GoogleBtn';
-// import MetaMask from '../Pages/Swap/metamask-auth';
 import MetaMaskAuth from '../Pages/Swap/test_metamask';
 import api from '../api';
 
@@ -77,7 +76,6 @@ const Header = () => {
       <StyledLink to={'/topup'}>
         <TopUp>儲值</TopUp>
       </StyledLink>
-      {/* <MetaMask/> */}
       <MetaMaskAuth/>
       <GoogleBtn/>
     </Container>
