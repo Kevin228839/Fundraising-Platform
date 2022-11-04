@@ -49,7 +49,7 @@ class Main extends Component {
               </div>
               <button type="submit" className="btn btn-primary btn-block btn-lg">STAKE!</button>
             </form>
-            <button
+            {/* <button
               type="submit"
               className="btn btn-link btn-block btn-sm"
               onClick={(event) => {
@@ -57,7 +57,7 @@ class Main extends Component {
                 this.props.unstakeTokens();
               }}>
                 UN-STAKE...
-              </button>
+              </button> */}
               <small id="account">{this.props.account}</small>
           </div>
         </div>

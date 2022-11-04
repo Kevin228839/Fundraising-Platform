@@ -8,14 +8,12 @@ contract StakeA {
 	MTwd public mtwd;
 	AToken public atoken;
 	address public owner;
-	//set transfer rate   
+	//set transfer rate = 1:1
 	uint public rateStake = 1;
 
-	//add stakingBalance
-    mapping(address => uint) public stakingBalance;
-	
-	
 
+	mapping(address => uint) public stakingBalance;
+	
 	constructor(MTwd _mtwd ,AToken _atoken) public {
 		mtwd = _mtwd;
 		atoken = _atoken;
@@ -53,7 +51,7 @@ contract StakeA {
 
 	function stake(uint _amountTwd) public {
 
-		//investors cannot stake more MUsdt than they have
+		//investors cannot stake more MTwd than they have
 		require(mtwd.balanceOf(msg.sender) >= _amountTwd);
 
 		//erc20 token: 1 ether == 10^18 wei
@@ -74,10 +72,20 @@ contract StakeA {
 		//transfer A token from pool to investor
 		atoken.transfer(msg.sender, amountATokenInEther*unit);
 
-		// Update staking balance
-        stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amountTwd;
 
+		// //Update staking balance
+		stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amountTwd;
+
+	
 	}
+
+
+
+
+
+
+
+
 
 
 }

@@ -25,6 +25,8 @@ contract RedeemPoolA {
 		uint amountATokenInEther = _amountA / unit;
 
 		atoken.transferFrom(msg.sender, address(this), amountATokenInEther*unit);
+		//atoken.transferFrom(msg.sender, address(this), _amountA);
+		
 	}
 
 }

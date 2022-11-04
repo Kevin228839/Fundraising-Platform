@@ -4,7 +4,7 @@ pragma solidity >=0.5.0;
 contract AToken {
     string  public name = "AAA Token";
     string  public symbol = "AAA";
-    uint256 public totalSupply = 1000000000000000000000; // 1 thousand tokens
+    uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
     uint8   public decimals = 18;
 
     event Transfer(

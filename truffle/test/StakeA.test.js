@@ -20,8 +20,11 @@ contract('StakeA', ([owner, investor]) => {
 		stakeA = await StakeA.new(mtwd.address, atoken.address)
 		redeemPoolA = await RedeemPoolA.new(atoken.address)
 
+		
+
 		//send 1000 Mtwd to investor
 		await mtwd.transfer(investor, token('1000'), {from:owner})
+
 	})
 
 	describe("Mtwd deployment", async() => {
@@ -69,7 +72,7 @@ contract('StakeA', ([owner, investor]) => {
 
 			//check pool's mtwd is equal to 0 before adding liquidity
 			const balanceTwd = await mtwd.balanceOf(stakeA.address)
-			assert.equal(balanceUsdt, token('0'))
+			assert.equal(balanceTwd, token('0'))
 
 			//check pool's A token is equal to 0 before adding liquidity
 			const balanceTokenA = await atoken.balanceOf(stakeA.address)
@@ -95,7 +98,6 @@ contract('StakeA', ([owner, investor]) => {
 			//check pool's mtwd amount is 500
 			result = await mtwd.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('500'))
-
 		})
 	})
 
@@ -131,28 +133,29 @@ contract('StakeA', ([owner, investor]) => {
 
 			//stake 5.5 mtwd (only 4 is staked actually)
 			await mtwd.approve(stakeA.address, token('4'), {from : investor})
-			await stakeA.stake(token('5.5'), {from : investor})
-
-			//investor staking balance correct after staking
-			result = await stakeA.stakingBalance(investor)
-			assert.equal(result.toString(), tokens('4'))
+			await stakeA.stake(token('4'), {from : investor})
 
 			//check investor's mtwd amount is 996
 			result = await mtwd.balanceOf(investor)
 			assert.equal(result.toString(), token('996'))
 
-
-			//check investor's token A amount is 2
+			//check investor's token A amount is 4
 			result = await atoken.balanceOf(investor)
-			assert.equal(result.toString(), token('2'))
+			assert.equal(result.toString(), token('4'))
 
 			//check pool's mtwd amount is 304
 			result = await mtwd.balanceOf(stakeA.address)
 			assert.equal(result.toString(), token('304'))
 
-			//check pool's token A amount is 298
+			//check pool's token A amount is 296
 			result = await atoken.balanceOf(stakeA.address)
-			assert.equal(result.toString(), token('298'))
+			assert.equal(result.toString(), token('296'))
+
+			//check investor's stakingBalance after staking'
+			result = await stakeA.stakingBalance(investor)
+			assert.equal(result.toString(), token('4'))
+
+
 
 		})
 	})
@@ -167,25 +170,13 @@ contract('StakeA', ([owner, investor]) => {
 
 			//check investor's token A amount is 1
 			result = await atoken.balanceOf(investor)
-			assert.equal(result.toString(), token('1'))
+			assert.equal(result.toString(), token('3'))
 
 			//check RedeemPoolA's token A amount is 1
 			result = await atoken.balanceOf(redeemPoolA.address)
 			assert.equal(result.toString(), token('1'))
 		})
 	})
-
-
-
-
-
-
-
-
-
-
-
-	
 
 
 })

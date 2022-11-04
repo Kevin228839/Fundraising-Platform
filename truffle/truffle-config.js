@@ -22,11 +22,13 @@ module.exports = {
     sepolia: {
       provider: () => new HDWalletProvider(mnemonic, `https://sepolia.infura.io/v3/${projectId}`),
       network_id: 11155111, // Sepolia's id
+      networkCheckTimeout: 10000000,
+      pollingInterval:30000,      
       gas: 5500000,
-      from: '0x35be81511cEe2b31B404bA781F0d1281F975c6D1',
       confirmations: 2,
-      timeoutBlocks: 200,
-      skipDryRun: true
+      timeoutBlocks: 2000,
+      skipDryRun: true,
+      from: 0x45D95DefbA8fEEC3467f01F90D23ABA7aC517461
 
     }
   },
